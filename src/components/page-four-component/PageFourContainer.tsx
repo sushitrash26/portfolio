@@ -4,9 +4,12 @@ import PageFourText from './PageFourText'
 import Skills from './Skills'
 import MyImage from './MyImage'
 import { SmoothCursor } from '../ui/smooth-cursor'
+import { BackgroundBeamsWithCollision } from '../ui/background-beams-with-collision'
 const PageFourContainer = () => {
   return (
+    <BackgroundBeamsWithCollision className='inset-0' >
     <div className="w-full sm:w-[90vw] md:w-[80vw] lg:w-[75vw] max-w-7xl bg-white mx-auto rounded-xl sm:rounded-2xl overflow-hidden p-4 sm:p-6 cursor-none">
+      {/* <BackgroundBeamsWithCollision> */}
         <SmoothCursor/>
         <PageFourHeading/>
         <div className='w-full flex flex-col lg:flex-row items-center gap-6 lg:gap-0'>
@@ -23,8 +26,9 @@ const PageFourContainer = () => {
               <MyImage/>
             </div>
         </div>
-       
+        {/* </BackgroundBeamsWithCollision> */}
     </div>
+     </BackgroundBeamsWithCollision>
   )
 }
 

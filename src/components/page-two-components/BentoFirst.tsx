@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
+import { LinkPreview } from "../ui/link-preview";
 
 const BentoFirst = () => {
   return (
@@ -15,13 +16,20 @@ const BentoFirst = () => {
         <h1 className="text-lg sm:text-xl md:text-2xl">DevOps/AI Engineer</h1>
         <div className="flex items-center gap-2 sm:gap-4 justify-between flex-wrap">
           <div className="flex items-center gap-2 sm:gap-4">
-            <Image src="/globefile.svg" alt="" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8" />
-            <Link
-              href="https://audivo.tech"
-              className="border-b border-neutral-400 text-sm sm:text-base"
+            <Image
+              src="/globefile.svg"
+              alt=""
+              width={32}
+              height={32}
+              className="w-6 h-6 sm:w-8 sm:h-8"
+            />
+            <LinkPreview
+              url="https://www.audivo.tech"
+              className="border-b border-neutral-400 text-sm sm:text-base cursor-none"
             >
               Audivo
-            </Link>
+            </LinkPreview>
+
           </div>
           <div className="flex items-center gap-1 sm:gap-2">
             <svg
@@ -230,7 +238,9 @@ const BentoFirst = () => {
           </svg>
         </div>
         <div className="w-full h-8 sm:h-10 flex justify-center items-center mt-2 sm:mt-3">
-          <div className="p-2 sm:p-4 py-1 sm:py-2 rounded-md border shadow-md hover:shadow-lg border-neutral-400 text-sm sm:text-lg hover:bg-black hover:text-white transition-colors">Visit Site</div>
+          <button className="px-4 cursor-none  py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">
+            Visit Site! 
+          </button>
         </div>
       </div>
     </div>
