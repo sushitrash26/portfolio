@@ -3,56 +3,57 @@ import React from "react";
 
 const BentoFirst = () => {
   return (
-    <div className="shadow-lg  col-span-3 rounded-lg border border-neutral-300 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-2">
-      <div className="w-full h-10  flex  items-center">
-        <div className="w-32 h-8 rounded-full bg-neutral-300 flex items-center px-4 gap-3 font-manrope tracking-wider hover:cursor-pointer hover:bg-neutral-300/50  transition-all duration-100 ">
-          <div className="h-4 w-4 bg-green-500 rounded-full"></div>
-          <p>Active</p>
+    <div className="shadow-[inset_-12px_-8px_40px_#46464620] rounded-lg border border-neutral-300 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-2 sm:p-4">
+      <div className="w-full h-8 sm:h-10 flex items-center">
+        <div className="w-28 sm:w-32 h-6 sm:h-8 rounded-full bg-neutral-300 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 font-manrope tracking-wider hover:cursor-pointer hover:bg-neutral-300/50 transition-all duration-100">
+          <div className="h-3 w-3 sm:h-4 sm:w-4 bg-green-500 rounded-full"></div>
+          <p className="text-xs sm:text-sm">Active</p>
         </div>
       </div>
-      <div className="w-full grid  items-center font-manrope tracking-wide font-bold mt-4 gap-4 px-2  ">
-        <h1 className="text-2xl ">DevOps/AI Engineer</h1>
-        <div className="flex  items-center gap-4 justify-between">
-          <div className="flex justify-center items-center gap-4 ">
-            <img src="globefile.svg" alt="" className="w-8 h-8" />
+      <div className="w-full grid items-center font-manrope tracking-wide font-bold mt-3 sm:mt-4 gap-3 sm:gap-4 px-1 sm:px-2">
+        <h1 className="text-lg sm:text-xl md:text-2xl">DevOps/AI Engineer</h1>
+        <div className="flex items-center gap-2 sm:gap-4 justify-between flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <img src="globefile.svg" alt="" className="w-6 h-6 sm:w-8 sm:h-8" />
             <Link
               href="https://audivo.tech"
-              className="border-b border-neutral-400"
+              className="border-b border-neutral-400 text-sm sm:text-base"
             >
               Audivo
             </Link>
           </div>
-          <div className="flex justify-end gap-2  items-center">
+          <div className="flex items-center gap-1 sm:gap-2">
             <svg
-              width="8%"
-              height="8%"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="flex-shrink-0"
             >
               <path
                 d="M21 10H3M16 2V6M8 2V6M7.8 22H16.2C17.8802 22 18.7202 22 19.362 21.673C19.9265 21.3854 20.3854 20.9265 20.673 20.362C21 19.7202 21 18.8802 21 17.2V8.8C21 7.11984 21 6.27976 20.673 5.63803C20.3854 5.07354 19.9265 4.6146 19.362 4.32698C18.7202 4 17.8802 4 16.2 4H7.8C6.11984 4 5.27976 4 4.63803 4.32698C4.07354 4.6146 3.6146 5.07354 3.32698 5.63803C3 6.27976 3 7.11984 3 8.8V17.2C3 18.8802 3 19.7202 3.32698 20.362C3.6146 20.9265 4.07354 21.3854 4.63803 21.673C5.27976 22 6.11984 22 7.8 22Z"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
 
-            <div className="w-24 h-8 bg-black rounded-full divide-x flex items-center px-2  ">
-              <div className="text-white w-[40%]">08</div>
-              <div className="text-white ml-1  ">2025</div>
+            <div className="w-20 sm:w-24 h-6 sm:h-8 bg-black rounded-full divide-x flex items-center px-1 sm:px-2">
+              <div className="text-white w-[40%] text-xs sm:text-sm">08</div>
+              <div className="text-white ml-1 text-xs sm:text-sm">2025</div>
             </div>
           </div>
         </div>
-        <div className="w-full mt-2 ">
-          <p>
+        <div className="w-full mt-2">
+          <p className="text-xs sm:text-sm leading-relaxed">
             Engineered Azure CI/CD pipelines reducing deployment time by 40%
             across 5+ projects, and optimized audio preprocessing workflows
             handling 100K+ sound files for cleaner, analysis-ready data.
           </p>
         </div>
-        <div className="flex justify-between items-center w-full border border-neutral-400 rounded-md p-2    gap-2 ">
+        <div className="flex justify-between items-center w-full border border-neutral-400 rounded-md p-1 sm:p-2 gap-1 sm:gap-2 overflow-x-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -227,8 +228,8 @@ const BentoFirst = () => {
             ></polygon>
           </svg>
         </div>
-        <div className="w-full h-10 flex justify-center items-center mt-3 ">
-            <div className="p-4 py-2 rounded-md border hover:cursor-pointer shadow-md hover:shadow-lg border-neutral-400 text-lg hover:bg-black hover:text-white ">Visit Site </div>
+        <div className="w-full h-8 sm:h-10 flex justify-center items-center mt-2 sm:mt-3">
+          <div className="p-2 sm:p-4 py-1 sm:py-2 rounded-md border shadow-md hover:shadow-lg border-neutral-400 text-sm sm:text-lg hover:bg-black hover:text-white transition-colors">Visit Site</div>
         </div>
       </div>
     </div>

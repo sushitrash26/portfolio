@@ -4,17 +4,24 @@ import PageFourContainer from "@/components/page-four-component/PageFourContaine
 import PageOneContainer from "@/components/page-one-component/PageOneContainer";
 import PageThreeContainer from "@/components/page-three-component/PageThreeContainer";
 import PageTwoContainer from "@/components/page-two-components/PageTwoContainer";
+import SocialMedia from "@/components/page-one-component/SocialMedia";
 
 
 
 
 export default function Home() {
   return (
-    <div className="bg-black p-6  grid justify-center items-center gap-4 scrollbar-hide  ">
-    <PageOneContainer/>
-    <PageTwoContainer/>
-    <PageThreeContainer/>
-    <PageFourContainer/>
+    <div className="bg-black min-h-screen">
+      {/* Sticky Social Media */}
+      <SocialMedia />
+      
+      {/* Main content container with responsive max-width constraint */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 grid justify-center items-center gap-4 sm:gap-6 scrollbar-hide">
+        <PageOneContainer/>
+        <PageTwoContainer/>
+        <PageThreeContainer/>
+        <PageFourContainer/>
+      </div>
     </div>
   );
 }

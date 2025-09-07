@@ -3,28 +3,28 @@ import Link from "next/link";
 
 const BentoThird = () => {
   return (
-    <div className="shadow-lg border  border-neutral-300 rounded-lg bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-2 px-4  ">
-      <div className="w-full h-10 flex gap-4  items-center">
-        <div className="w-36 font-manrope h-8 rounded-full bg-red-500/50  hover:cursor-pointer hover:bg-red-500/70 flex items-center px-4 gap-2  ">
-          <div className="h-4 w-4 rounded-full bg-red-500 "></div>
-          <p>Completed</p>
+    <div className="shadow-[inset_-12px_-8px_40px_#46464620] border border-neutral-300 rounded-lg bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-2 sm:p-4">
+      <div className="w-full h-8 sm:h-10 flex gap-2 sm:gap-4 items-center">
+        <div className="w-28 sm:w-36 font-manrope h-6 sm:h-8 rounded-full bg-red-500/50 hover:cursor-pointer hover:bg-red-500/70 flex items-center px-3 sm:px-4 gap-1 sm:gap-2">
+          <div className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-red-500"></div>
+          <p className="text-xs sm:text-sm">Completed</p>
         </div>
       </div>
-      <p className="text-xl font-manrope  font-bold mt-1  ">
-        Frontend Developer{" "}
+      <p className="text-lg sm:text-xl font-manrope font-bold mt-1">
+        Frontend Developer
       </p>
-      <div className="flex gap- justify-between  font-bold  font-manrope   mt-1   ">
-        <div className="flex items-center gap-3 ">
-          <img src="globefile.svg" alt="" className="w-8 h-8" />
+      <div className="flex gap-2 sm:gap-4 justify-between font-bold font-manrope mt-1">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <img src="globefile.svg" alt="" className="w-6 h-6 sm:w-8 sm:h-8" />
           <Link
             href=''
-            className="border-b border-neutral-400"
+            className="border-b border-neutral-400 text-sm sm:text-base"
           >
             Tutpoint.ai
           </Link>
         </div>
         <div>
-          <div className="flex justify-end gap-2  items-center">
+          <div className="flex justify-end gap-1 sm:gap-2 items-center">
             <svg
               width="7%"
               height="7%"
@@ -41,15 +41,15 @@ const BentoThird = () => {
               />
             </svg>
 
-            <div className="w-24 h-8 bg-black rounded-full divide-x flex items-center px-2  ">
-              <div className="text-white w-[40%]">05</div>
-              <div className="text-white ml-1  ">2024</div>
+            <div className="w-20 sm:w-24 h-6 sm:h-8 bg-black rounded-full divide-x flex items-center px-1 sm:px-2">
+              <div className="text-white w-[40%] text-xs sm:text-sm">05</div>
+              <div className="text-white ml-1 text-xs sm:text-sm">2024</div>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center items-center mt-1 font-bold  font-manrope ">
-      Built interactive chatbots for Q&A and discussions, delivering real-time responses to 1K+ daily queries with dynamic UI flows and micro-interactions for an engaging frontend experience.
+      <div className="w-full flex justify-center items-center mt-1 font-bold font-manrope text-xs sm:text-sm leading-relaxed">
+        Built interactive chatbots for Q&A and discussions, delivering real-time responses to 1K+ daily queries with dynamic UI flows and micro-interactions for an engaging frontend experience.
       </div>
     </div>
   )
