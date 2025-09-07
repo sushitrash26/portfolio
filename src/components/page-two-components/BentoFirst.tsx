@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
 
 const BentoFirst = () => {
@@ -14,7 +15,7 @@ const BentoFirst = () => {
         <h1 className="text-lg sm:text-xl md:text-2xl">DevOps/AI Engineer</h1>
         <div className="flex items-center gap-2 sm:gap-4 justify-between flex-wrap">
           <div className="flex items-center gap-2 sm:gap-4">
-            <img src="globefile.svg" alt="" className="w-6 h-6 sm:w-8 sm:h-8" />
+            <Image src="/globefile.svg" alt="" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8" />
             <Link
               href="https://audivo.tech"
               className="border-b border-neutral-400 text-sm sm:text-base"

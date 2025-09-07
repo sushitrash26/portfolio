@@ -1,6 +1,5 @@
 import React from 'react'
 import LocationBadge from './LocationBadge'
-import SocialMedia from './SocialMedia'
 import AvailableBadge from './AvailableBadge'
 import MainHeading from './MainHeading'
 import TechStackMarquee from './TechStackMarquee'

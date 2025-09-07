@@ -155,8 +155,8 @@ const TechStackMarquee = () => {
             gradientTransform="translate(1981.75 -1362.063) scale(1.5625)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#114a8b"></stop>
-            <stop offset="1" stop-color="#0669bc"></stop>
+            <stop offset="0" stopColor="#114a8b"></stop>
+            <stop offset="1" stopColor="#0669bc"></stop>
           </linearGradient>
           <path
             fill="url(#k8yl7~hDat~FaoWq8WjN6a_VLKafOkk3sBX_gr1)"

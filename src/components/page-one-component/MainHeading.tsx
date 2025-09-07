@@ -4,7 +4,7 @@ const MainHeading = () => {
   return (
     <div className="w-full flex justify-center items-center mt-2">
       <p className="text-2xl sm:text-3xl md:text-4xl lg:text-[3rem] w-full font-manrope text-center">
-        <span className="w-full flex justify-center">Hello, I'm Astitva.</span>
+        <span className="w-full flex justify-center">Hello, I&apos;m Astitva.</span>
         <span className="w-full flex justify-center items-center font-bold">
           Providing services for development
         </span>

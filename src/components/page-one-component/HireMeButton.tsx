@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from '../ui/button'
 import { InteractiveHoverButton } from '../magicui/interactive-hover-button'
 
 const HireMeButton = () => {
