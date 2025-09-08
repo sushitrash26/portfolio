@@ -6,7 +6,7 @@ const BentoSecond = () => {
   return (
     <div className="shadow-[inset_-12px_-8px_40px_#46464620] border h-[12rem] sm:h-[15rem] border-neutral-300 rounded-lg bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-2 sm:p-4">
       <div className="w-full h-8 sm:h-10 flex gap-2 sm:gap-4 items-center">
-        <div className="w-28 sm:w-36 font-manrope h-6 sm:h-8 rounded-full bg-red-500/50 hover:cursor-pointer hover:bg-red-500/70 flex items-center px-3 sm:px-4 gap-1 sm:gap-2">
+        <div className="w-28 sm:w-36 font-manrope h-6 sm:h-8 rounded-full bg-red-500/50 hover:cursor-none hover:bg-red-500/70 flex items-center px-3 sm:px-4 gap-1 sm:gap-2">
           <div className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-red-500"></div>
           <p className="text-xs sm:text-sm">Completed</p>
         </div>
@@ -19,7 +19,7 @@ const BentoSecond = () => {
           <Image src="/globefile.svg" alt="" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8" />
           <Link
             href="https://audivo.tech"
-            className="border-b border-neutral-400 text-sm sm:text-base"
+            className="border-b border-neutral-400 text-sm sm:text-base cursor-none"
           >
             Audivo
           </Link>

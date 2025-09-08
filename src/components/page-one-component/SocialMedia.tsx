@@ -2,9 +2,12 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
+import { MorphingPopover,MorphingPopoverTrigger} from '../../../components/motion-primitives/morphing-popover'
+import { MorphingPopoverContent } from '../../../components/motion-primitives/morphing-popover'
 
 const SocialMedia = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [contactOpen, setContactOpen] = useState(false)
 
   return (
     <div className='h-8 sm:h-10 flex items-center gap-2 sm:gap-4 flex-wrap justify-center sm:justify-start fixed top-4 right-4 z-50'>
@@ -16,7 +19,29 @@ const SocialMedia = () => {
           <Link href='' className='px-1 lg:px-2 hover:bg-neutral-400/35 transition-shadow rounded-md cursor-none whitespace-nowrap'>Resume</Link>
         </div>
         
-        <Button className='h-full p-1 lg:p-2 px-2 lg:px-4 cursor-none font-manrope text-xs lg:text-sm whitespace-nowrap border border-white '>Contact</Button>
+        
+        <MorphingPopover open={contactOpen} onOpenChange={setContactOpen} className=' '>
+          <MorphingPopoverTrigger>
+          <Button className='h-full p-1 lg:p-2 px-2 lg:px-4 cursor-none font-manrope text-xs lg:text-sm whitespace-nowrap border border-white active:scale-94 '>Contact</Button>
+          </MorphingPopoverTrigger>
+          <MorphingPopoverContent className='w-80 p-4 bg-white text-black dark:bg-zinc-700 dark:text-white rounded-md'>
+            <form className='grid gap-3' onSubmit={(e) => { e.preventDefault(); setContactOpen(false); }}>
+              <div className='grid gap-1'>
+                <label className='text-sm'>Name</label>
+                <input className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' name='name' required />
+              </div>
+              <div className='grid gap-1'>
+                <label className='text-sm'>Email</label>
+                <input type='email' className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' name='email' required />
+              </div>
+              <div className='grid gap-1'>
+                <label className='text-sm'>Message</label>
+                <textarea className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' name='message' rows={4} required />
+              </div>
+              <button type='submit' className='mt-2 rounded-md bg-black text-white px-4 py-2 dark:bg-white dark:text-black'>Send</button>
+            </form>
+          </MorphingPopoverContent>
+        </MorphingPopover>
       </div>
 
       {/* Mobile Hamburger Menu */}

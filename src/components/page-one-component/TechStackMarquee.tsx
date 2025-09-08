@@ -3,8 +3,8 @@ import Marquee from '../animata/container/marquee'
 
 const TechStackMarquee = () => {
   return (
-    <div className="w-full h-32 mt-4  flex justify-center items-center overflow-hidden">
-      <Marquee pauseOnHover className="w-full ">
+    <div className="w-full h-32 mt-4  flex justify-center items-center overflow-hidden bg-transparent ">
+      <Marquee pauseOnHover className="w-full   ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
@@ -15,7 +15,7 @@ const TechStackMarquee = () => {
         >
           <rect width="36" height="36" x="6" y="6" fill="#1976d2"></rect>
           <polygon
-            fill="#fff"
+            fill="#fff="
             points="27.49,22 14.227,22 14.227,25.264 18.984,25.264 18.984,40 22.753,40 22.753,25.264 27.49,25.264"
           ></polygon>
           <path

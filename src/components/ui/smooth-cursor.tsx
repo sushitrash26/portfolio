@@ -90,6 +90,7 @@ export function SmoothCursor({
   },
 }: SmoothCursorProps) {
   const [, setIsMoving] = useState(false);
+  const [isNativeZone, setIsNativeZone] = useState(false);
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
@@ -126,6 +127,14 @@ export function SmoothCursor({
     };
 
     const smoothMouseMove = (e: MouseEvent) => {
+      // Determine whether native cursor should be used
+      const target = e.target as Node | null;
+      const isBodyForcedNative = document.body.classList.contains("cursor-native");
+      const isElementNative = !!(target && (target as Element).closest?.('[data-cursor-native="true"], [data-cursor-native]'));
+      const useNative = isBodyForcedNative || isElementNative;
+      setIsNativeZone(useNative);
+      document.body.style.cursor = useNative ? "auto" : "none";
+
       const currentPos = { x: e.clientX, y: e.clientY };
       updateVelocity(currentPos);
 
@@ -170,11 +179,25 @@ export function SmoothCursor({
       });
     };
 
-    document.body.style.cursor = "none";
+    if (!document.body.classList.contains("cursor-native")) {
+      document.body.style.cursor = "none";
+    } else {
+      document.body.style.cursor = "auto";
+    }
+    const observer = new MutationObserver(() => {
+      // React to body class changes for cursor-native
+      if (document.body.classList.contains("cursor-native")) {
+        document.body.style.cursor = "auto";
+      } else {
+        document.body.style.cursor = "none";
+      }
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
     window.addEventListener("mousemove", throttledMouseMove);
 
     return () => {
       window.removeEventListener("mousemove", throttledMouseMove);
+      observer.disconnect();
       document.body.style.cursor = "auto";
       if (rafId) cancelAnimationFrame(rafId);
     };
@@ -193,6 +216,7 @@ export function SmoothCursor({
         zIndex: 100,
         pointerEvents: "none",
         willChange: "transform",
+        display: isNativeZone ? "none" : "block",
       }}
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}

@@ -12,7 +12,7 @@ import { TracingBeam } from "@/components/ui/tracing-beam";
 
 export default function Home() {
   return (
-    <div className="bg-black min-h-screen cursor-none">
+    <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 text-black min-h-screen cursor-none">
      
       
       <SocialMedia />

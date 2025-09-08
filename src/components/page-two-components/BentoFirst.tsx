@@ -7,9 +7,9 @@ const BentoFirst = () => {
   return (
     <div className="shadow-[inset_-12px_-8px_40px_#46464620] rounded-lg border border-neutral-300 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-2 sm:p-4">
       <div className="w-full h-8 sm:h-10 flex items-center">
-        <div className="w-28 sm:w-32 h-6 sm:h-8 rounded-full bg-neutral-300 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 font-manrope tracking-wider hover:cursor-pointer hover:bg-neutral-300/50 transition-all duration-100">
+        <div className="w-28 sm:w-32 h-6 sm:h-8 rounded-full bg-neutral-300 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 font-manrope tracking-wider hover:cursor-none hover:bg-neutral-300/50 transition-all duration-100">
           <div className="h-3 w-3 sm:h-4 sm:w-4 bg-green-500 rounded-full"></div>
-          <p className="text-xs sm:text-sm">Active</p>
+          <p className="text-xs sm:text-sm ">Active</p>
         </div>
       </div>
       <div className="w-full grid items-center font-manrope tracking-wide font-bold mt-3 sm:mt-4 gap-3 sm:gap-4 px-1 sm:px-2">
@@ -238,7 +238,7 @@ const BentoFirst = () => {
           </svg>
         </div>
         <div className="w-full h-8 sm:h-10 flex justify-center items-center mt-2 sm:mt-3">
-          <button className="px-4 cursor-none  py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">
+          <button className="px-4 cursor-none active:scale-94 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">
             Visit Site! 
           </button>
         </div>

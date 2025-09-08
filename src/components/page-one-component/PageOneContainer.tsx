@@ -13,7 +13,7 @@ const PageOneContainer = () => {
     
   return (
     
-      <div className="w-full sm:w-[90vw] md:w-[80vw] lg:w-[75vw] max-w-7xl bg-white mx-auto rounded-xl sm:rounded-2xl overflow-hidden p-4 sm:p-6 relative">
+      <div className="w-full sm:w-[90vw] md:w-[80vw] lg:w-[75vw] max-w-7xl bg-white/95 mx-auto rounded-xl sm:rounded-2xl overflow-hidden p-4 sm:p-6 relative">
 
         <div className="absolute inset-0 overflow-hidden">
           <Meteors number={15} />
