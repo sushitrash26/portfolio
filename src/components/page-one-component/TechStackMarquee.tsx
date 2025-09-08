@@ -175,11 +175,11 @@ const TechStackMarquee = () => {
             gradientTransform="translate(1981.75 -1362.063) scale(1.5625)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-opacity=".3"></stop>
-            <stop offset=".071" stop-opacity=".2"></stop>
-            <stop offset=".321" stop-opacity=".1"></stop>
-            <stop offset=".623" stop-opacity=".05"></stop>
-            <stop offset="1" stop-opacity="0"></stop>
+            <stop offset="0" stopOpacity=".3"></stop>
+            <stop offset=".071" stopOpacity=".2"></stop>
+            <stop offset=".321" stopOpacity=".1"></stop>
+            <stop offset=".623" stopOpacity=".05"></stop>
+            <stop offset="1" stopOpacity="0"></stop>
           </linearGradient>
           <path
             fill="url(#k8yl7~hDat~FaoWq8WjN6b_VLKafOkk3sBX_gr2)"
@@ -194,8 +194,8 @@ const TechStackMarquee = () => {
             gradientTransform="translate(1981.75 -1362.063) scale(1.5625)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#3ccbf4"></stop>
-            <stop offset="1" stop-color="#2892df"></stop>
+            <stop offset="0" stopColor="#3ccbf4"></stop>
+            <stop offset="1" stopColor="#2892df"></stop>
           </linearGradient>
           <path
             fill="url(#k8yl7~hDat~FaoWq8WjN6c_VLKafOkk3sBX_gr3)"
@@ -219,8 +219,8 @@ const TechStackMarquee = () => {
             y2="35.468"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#6dc7ff"></stop>
-            <stop offset=".699" stop-color="#e6abff"></stop>
+            <stop offset="0" stopColor="#6dc7ff"></stop>
+            <stop offset=".699" stopColor="#e6abff"></stop>
           </linearGradient>
           <circle
             cx="25"
@@ -236,8 +236,8 @@ const TechStackMarquee = () => {
             y2="15.247"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#6dc7ff"></stop>
-            <stop offset=".699" stop-color="#e6abff"></stop>
+            <stop offset="0" stopColor="#6dc7ff"></stop>
+            <stop offset=".699" stopColor="#e6abff"></stop>
           </linearGradient>
           <circle
             cx="25"
@@ -253,8 +253,8 @@ const TechStackMarquee = () => {
             y2="26.122"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#6dc7ff"></stop>
-            <stop offset=".699" stop-color="#e6abff"></stop>
+            <stop offset="0" stopColor="#6dc7ff"></stop>
+            <stop offset=".699" stopColor="#e6abff"></stop>
           </linearGradient>
           <path
             fill="url(#McNNGNAksUGwd4dZoMtSic_fOhLNqGJsUbJ_gr3)"
@@ -268,8 +268,8 @@ const TechStackMarquee = () => {
             y2="49.233"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#6dc7ff"></stop>
-            <stop offset=".699" stop-color="#e6abff"></stop>
+            <stop offset="0" stopColor="#6dc7ff"></stop>
+            <stop offset=".699" stopColor="#e6abff"></stop>
           </linearGradient>
           <path
             fill="url(#McNNGNAksUGwd4dZoMtSid_fOhLNqGJsUbJ_gr4)"
@@ -283,8 +283,8 @@ const TechStackMarquee = () => {
             y2="58.584"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#6dc7ff"></stop>
-            <stop offset=".699" stop-color="#e6abff"></stop>
+            <stop offset="0" stopColor="#6dc7ff"></stop>
+            <stop offset=".699" stopColor="#e6abff"></stop>
           </linearGradient>
           <circle
             cx="25"
@@ -300,8 +300,8 @@ const TechStackMarquee = () => {
             y2="64"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0" stop-color="#1a6dff"></stop>
-            <stop offset="1" stop-color="#c822ff"></stop>
+            <stop offset="0" stopColor="#1a6dff"></stop>
+            <stop offset="1" stopColor="#c822ff"></stop>
           </linearGradient>
           <path
             fill="url(#McNNGNAksUGwd4dZoMtSif_fOhLNqGJsUbJ_gr6)"
