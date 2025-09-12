@@ -19,7 +19,7 @@ import useClickOutside from '@/hooks/useClickOutside';
 import { cn } from '@/lib/utils';
 
 const TRANSITION = {
-  type: 'spring',
+  type: 'spring' as const,
   bounce: 0.1,
   duration: 0.4,
 };
@@ -30,7 +30,7 @@ type MorphingPopoverContextValue = {
   close: () => void;
   uniqueId: string;
   variants?: Variants;
-  triggerRef: React.RefObject<HTMLDivElement>;
+  triggerRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const MorphingPopoverContext =
@@ -69,7 +69,12 @@ function usePopoverLogic({
 
 export type MorphingPopoverProps = {
   children: React.ReactNode;
-  transition?: any;
+  transition?: {
+    type?: 'spring' | 'tween' | 'keyframes' | 'inertia';
+    bounce?: number;
+    duration?: number;
+    [key: string]: unknown;
+  };
   defaultOpen?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -126,7 +131,7 @@ function MorphingPopoverTrigger({
 
   if (asChild && isValidElement(children)) {
     const MotionComponent = motion.create(
-      children.type as React.ForwardRefExoticComponent<any>
+      children.type as React.ForwardRefExoticComponent<Record<string, unknown>>
     );
     const childProps = children.props as Record<string, unknown>;
 
