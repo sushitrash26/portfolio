@@ -15,8 +15,8 @@ const SocialMedia = () => {
       <div className='hidden sm:flex items-center gap-2 lg:gap-4 '>
         <div className='text-xs bg-white lg:text-sm font-manrope flex items-center gap-1 lg:gap-2 rounded-md border border-neutral-300 hover:shadow-md transition-shadow p-1 lg:p-2 px-2 lg:px-4'>
           <Link href='' className='px-2 lg:px-4 hover:bg-neutral-400/35 transition-shadow rounded-sm cursor-none whitespace-nowrap'>X</Link>
-          <Link href='' className='px-1 lg:px-2 hover:bg-neutral-400/35 transition-shadow rounded-sm cursor-none whitespace-nowrap'>LinkedIn</Link>
-          <Link href='' className='px-1 lg:px-2 hover:bg-neutral-400/35 transition-shadow rounded-md cursor-none whitespace-nowrap'>Resume</Link>
+          <Link href='https://www.linkedin.com/in/astitvapathak/' className='px-1 lg:px-2 hover:bg-neutral-400/35 transition-shadow rounded-sm cursor-none whitespace-nowrap'>LinkedIn</Link>
+          <Link href='https://drive.google.com/file/d/1IxkEMgRKXEke_IKkY1ig-jCYFf49cpe_/view?usp=drive_link' className='px-1 lg:px-2 hover:bg-neutral-400/35 transition-shadow rounded-md cursor-none whitespace-nowrap'>Resume</Link>
         </div>
         
         
@@ -25,18 +25,74 @@ const SocialMedia = () => {
           <Button className='h-full p-1 lg:p-2 px-2 lg:px-4 cursor-none font-manrope text-xs lg:text-sm whitespace-nowrap border border-white active:scale-94 '>Contact</Button>
           </MorphingPopoverTrigger>
           <MorphingPopoverContent className='w-80 p-4 bg-white text-black dark:bg-zinc-700 dark:text-white rounded-md'>
-            <form className='grid gap-3' onSubmit={(e) => { e.preventDefault(); setContactOpen(false); }}>
+            <form className='grid gap-3' onSubmit={async (e) => { 
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message'),
+              };
+
+              try {
+                const response = await fetch('/api/contact', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                  alert('Message sent successfully!');
+                  setContactOpen(false);
+                  e.currentTarget.reset();
+                } else {
+                  alert('Failed to send message. Please try again.');
+                }
+              } catch (error) {
+                alert('Error sending message. Please try again.');
+                console.error('Error:', error);
+              }
+            }}>
               <div className='grid gap-1'>
                 <label className='text-sm'>Name</label>
-                <input className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' name='name' required />
+                <input 
+                  className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' 
+                  name='name' 
+                  placeholder='Your full name'
+                  required 
+                />
               </div>
               <div className='grid gap-1'>
                 <label className='text-sm'>Email</label>
-                <input type='email' className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' name='email' required />
+                <input 
+                  type='email' 
+                  className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' 
+                  name='email' 
+                  placeholder='your.email@example.com'
+                  required 
+                />
+              </div>
+              <div className='grid gap-1'>
+                <label className='text-sm'>Subject</label>
+                <input 
+                  className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' 
+                  name='subject' 
+                  placeholder='What is this about?'
+                  required 
+                />
               </div>
               <div className='grid gap-1'>
                 <label className='text-sm'>Message</label>
-                <textarea className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' name='message' rows={4} required />
+                <textarea 
+                  className='rounded-md border px-3 py-2 bg-white text-black dark:bg-zinc-800 dark:text-white' 
+                  name='message' 
+                  placeholder='Write your message here...'
+                  rows={4} 
+                  required 
+                />
               </div>
               <button type='submit' className='mt-2 rounded-md bg-black text-white px-4 py-2 dark:bg-white dark:text-black'>Send</button>
             </form>

@@ -46,7 +46,7 @@ export default function Marquee({
     <div
       {...props}
       className={cn(
-        "group relative flex h-full w-full p-2 [--duration:20s] [--gap:2rem] [gap:var(--gap)]",
+        "group relative flex h-full w-full p-2 [--duration:20s] [--gap:2rem] [gap:var(--gap)] bg-transparent",
         {
           "flex-col": vertical,
           "flex-row": !vertical,
