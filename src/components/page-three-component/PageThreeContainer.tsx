@@ -9,8 +9,8 @@ const PageThreeContainer = () => {
         <PageThreeHeading/>
         <Cards/>
         <div className='w-full grid justify-center items-center mt-6 sm:mt-10 text-lg sm:text-xl md:text-2xl lg:text-3xl font-manrope font-bold mx-auto px-4 text-center'>
-          <span>Interactive video editing web application for content creators,</span>
-          <span className='w-full flex justify-center items-center'>music producers, and filmmakers.</span>
+          <span>Interactive video editor platforms, SaaS websites,</span>
+          <span className='w-full flex justify-center items-center'>3D websites, and modern web experiences.</span>
         </div>
 
         

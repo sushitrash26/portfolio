@@ -4,53 +4,57 @@ import Image from "next/image";
 
 const BentoThird = () => {
   return (
-    <div className="shadow-[inset_-12px_-8px_40px_#46464620] border border-neutral-300 rounded-lg bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-2 sm:p-4">
-      <div className="w-full h-8 sm:h-10 flex gap-2 sm:gap-4 items-center">
-        <div className="w-28 sm:w-36 font-manrope h-6 sm:h-8 rounded-full bg-red-500/50 hover:cursor-none hover:bg-red-500/70 flex items-center px-3 sm:px-4 gap-1 sm:gap-2">
-          <div className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-red-500"></div>
-          <p className="text-xs sm:text-sm">Completed</p>
+    <div className="shadow-[inset_-12px_-8px_40px_#46464620] border border-neutral-300 rounded-lg bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-3 sm:p-4 flex flex-col justify-between gap-3">
+      <div>
+        <div className="w-full h-8 sm:h-10 flex gap-2 sm:gap-4 items-center">
+          <div className="w-28 sm:w-36 font-manrope h-6 sm:h-8 rounded-full bg-red-500/50 hover:cursor-none hover:bg-red-500/70 flex items-center px-3 sm:px-4 gap-1 sm:gap-2">
+            <div className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-red-500"></div>
+            <p className="text-xs sm:text-sm">Completed</p>
+          </div>
         </div>
-      </div>
-      <p className="text-lg sm:text-xl font-manrope font-bold mt-1">
-        Frontend Developer
-      </p>
-      <div className="flex gap-2 sm:gap-4 justify-between font-bold font-manrope mt-1">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Image src="/globefile.svg" alt="" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8" />
-          <Link
-            href=''
-            className="border-b border-neutral-400 text-sm sm:text-base cursor-none "
-          >
-            Tutpoint.ai
-          </Link>
-        </div>
-        <div>
-          <div className="flex justify-end gap-1 sm:gap-2 items-center">
-            <svg
-              width="7%"
-              height="7%"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+        <p className="text-lg sm:text-xl font-manrope font-bold mt-2">
+          Frontend Developer
+        </p>
+        <div className="flex gap-2 sm:gap-4 justify-between font-bold font-manrope mt-2 flex-wrap items-center">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Image src="/globefile.svg" alt="" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8" />
+            <Link
+              href="https://tutpoint.ai"
+              target="_blank"
+              className="border-b border-neutral-400 text-sm sm:text-base cursor-none"
             >
-              <path
-                d="M21 10H3M16 2V6M8 2V6M7.8 22H16.2C17.8802 22 18.7202 22 19.362 21.673C19.9265 21.3854 20.3854 20.9265 20.673 20.362C21 19.7202 21 18.8802 21 17.2V8.8C21 7.11984 21 6.27976 20.673 5.63803C20.3854 5.07354 19.9265 4.6146 19.362 4.32698C18.7202 4 17.8802 4 16.2 4H7.8C6.11984 4 5.27976 4 4.63803 4.32698C4.07354 4.6146 3.6146 5.07354 3.32698 5.63803C3 6.27976 3 7.11984 3 8.8V17.2C3 18.8802 3 19.7202 3.32698 20.362C3.6146 20.9265 4.07354 21.3854 4.63803 21.673C5.27976 22 6.11984 22 7.8 22Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+              Tutpoint.ai
+            </Link>
+          </div>
+          <div>
+            <div className="flex justify-end gap-1 sm:gap-2 items-center">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="flex-shrink-0"
+              >
+                <path
+                  d="M21 10H3M16 2V6M8 2V6M7.8 22H16.2C17.8802 22 18.7202 22 19.362 21.673C19.9265 21.3854 20.3854 20.9265 20.673 20.362C21 19.7202 21 18.8802 21 17.2V8.8C21 7.11984 21 6.27976 20.673 5.63803C20.3854 5.07354 19.9265 4.6146 19.362 4.32698C18.7202 4 17.8802 4 16.2 4H7.8C6.11984 4 5.27976 4 4.63803 4.32698C4.07354 4.6146 3.6146 5.07354 3.32698 5.63803C3 6.27976 3 7.11984 3 8.8V17.2C3 18.8802 3 19.7202 3.32698 20.362C3.6146 20.9265 4.07354 21.3854 4.63803 21.673C5.27976 22 6.11984 22 7.8 22Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
 
-            <div className="w-20 sm:w-24 h-6 sm:h-8 bg-black rounded-full divide-x flex items-center px-1 sm:px-2">
-              <div className="text-white w-[40%] text-xs sm:text-sm">05</div>
-              <div className="text-white ml-1 text-xs sm:text-sm">2024</div>
+              <div className="w-20 sm:w-24 h-6 sm:h-8 bg-black rounded-full divide-x flex items-center px-1 sm:px-2">
+                <div className="text-white w-[40%] text-xs sm:text-sm">01</div>
+                <div className="text-white ml-1 text-xs sm:text-sm">2024</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center items-center mt-1 font-bold font-manrope text-xs sm:text-sm leading-relaxed">
-        Built interactive chatbots for Q&A and discussions, delivering real-time responses to 1K+ daily queries with dynamic UI flows and micro-interactions for an engaging frontend experience.
+      <div className="w-full text-neutral-700 font-manrope mt-2 text-xs sm:text-sm leading-relaxed font-normal">
+        Built responsive React.js frontend with GSAP ScrollTrigger animations, growing engagement 5x. Wired a real-time problem-solving interface over WebSocket handling 200+ concurrent users, and optimized Core Web Vitals to cut page load times by 60%.
       </div>
     </div>
   )

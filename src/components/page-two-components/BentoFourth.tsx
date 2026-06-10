@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const BentoSecond = () => {
+const BentoFourth = () => {
   return (
     <div className="w-full shadow-[inset_-12px_-8px_40px_#46464620] border border-neutral-300 rounded-lg bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] p-4 sm:p-5 flex flex-col justify-between gap-3 hover:shadow-[inset_-12px_-8px_40px_#46464625,0_8px_30px_rgb(0_0_0_/_4%)] hover:border-neutral-400 hover:-translate-y-0.5 transition-all duration-300 ease-out">
       <div>
@@ -13,17 +13,17 @@ const BentoSecond = () => {
           </div>
         </div>
         <p className="text-lg sm:text-xl font-manrope font-bold mt-2">
-          Full-Stack Developer
+          Software Engineer Intern
         </p>
         <div className="flex gap-2 sm:gap-4 justify-between font-bold font-manrope mt-2 flex-wrap items-center">
           <div className="flex items-center gap-2 sm:gap-3">
             <Image src="/globefile.svg" alt="" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8" />
             <Link
-              href="https://audivo.tech"
+              href="https://rayvector.com"
               target="_blank"
               className="border-b border-neutral-400 text-sm sm:text-base cursor-none"
             >
-              Audivo
+              Rayvector Technologies
             </Link>
           </div>
           <div>
@@ -46,18 +46,18 @@ const BentoSecond = () => {
               </svg>
 
               <div className="w-20 sm:w-24 h-6 sm:h-8 bg-black rounded-full divide-x flex items-center px-1 sm:px-2">
-                <div className="text-white w-[40%] text-xs sm:text-sm">06</div>
-                <div className="text-white ml-1 text-xs sm:text-sm">2025</div>
+                <div className="text-white w-[40%] text-xs sm:text-sm">01</div>
+                <div className="text-white ml-1 text-xs sm:text-sm">2026</div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div className="w-full text-neutral-700 font-manrope mt-2 text-xs sm:text-sm leading-relaxed font-normal">
-        Built full-stack AI music generator with Next.js, TypeScript, and MongoDB. Developed a timeline-based audio/video editor supporting 1,000+ concurrent sessions with real-time collaboration. Used FFmpeg for subtitle overlays and 4K rendering, reducing export times by 65%.
+        Trained and deployed Computer Vision models for semiconductor manufacturing, improving anomaly detection accuracy by 50%. Built hardware-software solution for real-time silicon wafer thickness monitoring and integrated Raspberry Pi, Jetson, and NVIDIA edge controllers.
       </div>
     </div>
   );
 };
 
-export default BentoSecond;
+export default BentoFourth;

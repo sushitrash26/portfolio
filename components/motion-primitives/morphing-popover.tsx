@@ -20,8 +20,30 @@ import { cn } from '@/lib/utils';
 
 const TRANSITION = {
   type: 'spring' as const,
-  bounce: 0.1,
-  duration: 0.4,
+  bounce: 0.05,
+  duration: 0.5,
+};
+
+// Content morph variants — scales + fades in from a small collapsed state
+const CONTENT_VARIANTS: Variants = {
+  initial: {
+    opacity: 0,
+    scale: 0.7,
+    transformOrigin: 'top right',
+    filter: 'blur(4px)',
+  },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', bounce: 0.15, duration: 0.45 },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.7,
+    filter: 'blur(4px)',
+    transition: { type: 'spring', bounce: 0, duration: 0.3 },
+  },
 };
 
 type MorphingPopoverContextValue = {
@@ -218,45 +240,33 @@ function MorphingPopoverContent({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [context.isOpen, context.close]);
 
-  // Toggle native cursor while popover is open
-  useEffect(() => {
-    if (context.isOpen) {
-      document.body.classList.add('cursor-native');
-    } else {
-      document.body.classList.remove('cursor-native');
-    }
-    return () => {
-      document.body.classList.remove('cursor-native');
-    };
-  }, [context.isOpen]);
+  // No body-level cursor toggle — the form fields handle their own native cursor
+  // via data-cursor-native on the popover content wrapper
 
   return (
     <AnimatePresence>
       {context.isOpen && (
-        <>
-          <motion.div
-            {...props}
-            ref={ref}
-            layoutId={`popover-trigger-${context.uniqueId}`}
-            key={context.uniqueId}
-            id={`popover-content-${context.uniqueId}`}
-            role='dialog'
-            aria-modal='true'
-            data-cursor-native
-            className={cn(
-              'absolute overflow-hidden rounded-md border border-zinc-950/10 bg-white p-2 text-zinc-950 shadow-md dark:border-zinc-50/10 dark:bg-zinc-700 dark:text-zinc-50 right-0',
-              placeAbove ? 'bottom-full mb-2' : 'top-full mt-2',
-              'max-h-[70vh] overflow-auto max-w-[min(20rem,calc(100vw-1rem))]',
-              className
-            )}
-            initial='initial'
-            animate='animate'
-            exit='exit'
-            variants={context.variants}
-          >
-            {children}
-          </motion.div>
-        </>
+        <motion.div
+          {...props}
+          ref={ref}
+          layoutId={`popover-trigger-${context.uniqueId}`}
+          key={context.uniqueId}
+          id={`popover-content-${context.uniqueId}`}
+          role='dialog'
+          aria-modal='true'
+          data-cursor-native
+          className={cn(
+            'absolute overflow-hidden rounded-xl border border-zinc-950/10 bg-white p-2 text-zinc-950 shadow-xl dark:border-zinc-50/10 dark:bg-zinc-700 dark:text-zinc-50 right-0',
+            placeAbove ? 'bottom-full mb-2' : 'top-full mt-2',
+            className
+          )}
+          initial='initial'
+          animate='animate'
+          exit='exit'
+          variants={context.variants ?? CONTENT_VARIANTS}
+        >
+          {children}
+        </motion.div>
       )}
     </AnimatePresence>
   );
