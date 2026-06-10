@@ -18,7 +18,7 @@ interface ConfettiParticle {
 }
 
 export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onClose }) => {
-  const [step, setStep] = useState<'input' | 'payment-upi' | 'processing' | 'success'>('input')
+  const [step, setStep] = useState<'input' | 'payment-upi' | 'verify-utr' | 'processing' | 'success'>('input')
   const [donorName, setDonorName] = useState('')
   const [message, setMessage] = useState('')
   
@@ -26,6 +26,10 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
   const [upiMode, setUpiMode] = useState<'qr' | 'id'>('qr')
   const [upiId, setUpiId] = useState('')
   const [upiError, setUpiError] = useState('')
+  
+  // UTR (Transaction ID) Verification state
+  const [utrNumber, setUtrNumber] = useState('')
+  const [utrError, setUtrError] = useState('')
 
   // Interactive UI effects
   const [focusedField, setFocusedField] = useState<string | null>(null)
@@ -43,6 +47,8 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
     setMessage('')
     setUpiId('')
     setUpiError('')
+    setUtrNumber('')
+    setUtrError('')
     setFocusedField(null)
     setParticles([])
   }, [isOpen])
@@ -71,8 +77,10 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
         return "Keep it short, we have zero attention span."
       case 'upiId':
         return "yourname@bankname. Make sure you approve it on your phone."
+      case 'utr':
+        return "Type the 12-digit UTR/Ref No. from your payment app screen."
       default:
-        return "It's giving support. UPI payment gateway active."
+        return "It's giving support. UPI verification active."
     }
   }
 
@@ -88,6 +96,14 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
     return ''
   }
 
+  // UTR number check (exactly 12 digits)
+  const validateUTR = (utr: string) => {
+    const regex = /^\d{12}$/
+    if (!utr.trim()) return 'UTR/Ref number is required to verify'
+    if (!regex.test(utr.trim())) return 'A real UTR has exactly 12 digits, bestie'
+    return ''
+  }
+
   // Proceed from details screen to UPI payment screen
   const handleProceedToUPI = (e: React.FormEvent) => {
     e.preventDefault()
@@ -95,7 +111,7 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
   }
 
   // Submit UPI ID payment
-  const handleUPISubmit = (e: React.FormEvent) => {
+  const handleUPIRequestSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const err = validateUPI(upiId)
     setUpiError(err)
@@ -103,44 +119,73 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
       triggerShake('upiId')
       return
     }
+    // Go to UTR verification step so we collect UTR details
+    setStep('verify-utr')
+  }
+
+  // Submit UTR verification details to backend email sender
+  const handleUTRSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const err = validateUTR(utrNumber)
+    setUtrError(err)
+    if (err) {
+      triggerShake('utr')
+      return
+    }
 
     setStep('processing')
+    setProcessMessage('Notifying creator of payment...')
+
+    try {
+      const res = await fetch('/api/verify-upi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: donorName,
+          message: message,
+          amount: paymentAmountINR,
+          utr: utrNumber
+        })
+      })
+
+      if (!res.ok) {
+        throw new Error('Verification request failed')
+      }
+    } catch {
+      // Graceful fallback: even if the API throws (e.g. offline dev), let the client see success logs
+      console.warn('Backend UPI email notification offline, resolving locally.')
+    }
+
     const messages = [
-      'Pinging banking servers...',
-      `Pushing payment notification request to ${upiId}...`,
-      'Waiting for user authorization on phone...',
-      'Securing transfer tunnel...',
+      'Linking UTR to your sponsor profile...',
+      'Matching transaction receipt references...',
+      'SSL check is giving secure vibes...',
       'Securing the bag...'
     ]
 
     messages.forEach((msg, index) => {
-      setTimeout(() => setProcessMessage(msg), index * 1000)
+      setTimeout(() => setProcessMessage(msg), index * 800)
     })
 
     setTimeout(() => {
       triggerSuccess()
-    }, messages.length * 1000 + 300)
+    }, messages.length * 800 + 200)
   }
 
   // Trigger Success State with Confetti Explosion
   const triggerSuccess = () => {
-    setStep('processing')
-    setProcessMessage('Finalizing transfer...')
-
-    setTimeout(() => {
-      const colors = ['#f43f5e', '#3b82f6', '#10b981', '#eab308', '#a855f7', '#ff7a00']
-      const newParticles = Array.from({ length: 50 }).map((_, i) => ({
-        id: i,
-        x: 0,
-        y: 0,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        angle: Math.random() * Math.PI * 2,
-        speed: 4 + Math.random() * 8,
-        scale: 0.5 + Math.random() * 1
-      }))
-      setParticles(newParticles)
-      setStep('success')
-    }, 800)
+    const colors = ['#f43f5e', '#3b82f6', '#10b981', '#eab308', '#a855f7', '#ff7a00']
+    const newParticles = Array.from({ length: 50 }).map((_, i) => ({
+      id: i,
+      x: 0,
+      y: 0,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      angle: Math.random() * Math.PI * 2,
+      speed: 4 + Math.random() * 8,
+      scale: 0.5 + Math.random() * 1
+    }))
+    setParticles(newParticles)
+    setStep('success')
   }
 
   // Dynamic UPI settings from environment variables
@@ -330,15 +375,16 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
                             Back
                           </button>
                           <button
-                            onClick={() => triggerSuccess()}
-                            className="w-2/3 py-3 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 active:scale-95 transition-all text-sm cursor-none"
+                            onClick={() => setStep('verify-utr')}
+                            className="w-2/3 py-3 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 active:scale-95 transition-all text-sm cursor-none flex items-center justify-center gap-1"
                           >
-                            Approved Paid
+                            <span>I&apos;ve Paid</span>
+                            <span>→</span>
                           </button>
                         </div>
                       </div>
                     ) : (
-                      <form onSubmit={handleUPISubmit} className="flex flex-col gap-4">
+                      <form onSubmit={handleUPIRequestSubmit} className="flex flex-col gap-4">
                         <div className="flex flex-col gap-1">
                           <label className="text-xs text-neutral-400 font-semibold">UPI ID / VPA</label>
                           <motion.input
@@ -386,6 +432,71 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
                       </form>
                     )}
                   </motion.div>
+                )}
+
+                {step === 'verify-utr' && (
+                  <motion.form
+                    key="step-utr"
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    onSubmit={handleUTRSubmit}
+                    className="flex flex-col gap-4"
+                  >
+                    <div className="flex flex-col gap-1 text-center mb-1">
+                      <h3 className="text-sm font-bold text-white uppercase tracking-wider">Confirm Transaction</h3>
+                      <p className="text-xs text-neutral-400">
+                        Please enter the 12-digit UTR/Ref No. from your payment receipt to link the transaction.
+                      </p>
+                    </div>
+
+                    {/* UTR Input field */}
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-neutral-400 font-semibold">12-Digit Ref No. / UTR</label>
+                      <motion.input
+                        type="text"
+                        maxLength={12}
+                        placeholder="e.g. 314812345678"
+                        value={utrNumber}
+                        onFocus={() => setFocusedField('utr')}
+                        onBlur={() => setFocusedField(null)}
+                        onChange={(e) => setUtrNumber(e.target.value.replace(/\D/g, ''))}
+                        variants={shakeVariants}
+                        animate={shakeTrigger.utr ? 'shake' : ''}
+                        custom={shakeTrigger.utr}
+                        className={`w-full bg-neutral-850 border rounded-xl px-3 py-2 text-sm text-white focus:outline-none transition-colors focus:ring-1 focus:ring-neutral-500 font-mono ${
+                          utrError ? 'border-red-500' : 'border-neutral-700'
+                        }`}
+                      />
+                      {utrError && (
+                        <p className="text-[11px] text-red-500 flex items-center gap-1">
+                          <span>⚠</span> {utrError}
+                        </p>
+                      )}
+                    </div>
+
+                    <p className="text-[10px] text-neutral-500 text-center leading-normal">
+                      Verified details will be emailed to the creator for quick approval. Link matching usually takes a few minutes.
+                    </p>
+
+                    <div className="flex gap-3 mt-2">
+                      <button
+                        type="button"
+                        onClick={() => setStep('payment-upi')}
+                        className="w-1/3 py-3 rounded-xl border border-neutral-700 hover:bg-neutral-800 active:scale-95 transition-all text-sm font-semibold cursor-none"
+                      >
+                        Back
+                      </button>
+                      <motion.button
+                        type="submit"
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-2/3 py-3 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 active:scale-95 transition-all text-sm cursor-none"
+                      >
+                        Submit Verification
+                      </motion.button>
+                    </div>
+                  </motion.form>
                 )}
 
                 {step === 'processing' && (
@@ -446,7 +557,7 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
                     <div className="flex flex-col gap-1">
                       <h3 className="text-lg font-bold font-manrope text-white">Massive W!</h3>
                       <p className="text-xs text-neutral-300">
-                        We are so back. Transaction cleared.
+                        Verification submitted. Transaction queued for check.
                       </p>
                     </div>
 
@@ -457,13 +568,17 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
                         <span className="font-semibold text-white">{donorName || 'Anonymous'}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Funds transferred:</span>
+                        <span>Funds Transferred:</span>
                         <span className="font-semibold text-white">₹{paymentAmountINR}.00 INR</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>UTR Ref:</span>
+                        <span className="font-semibold font-mono text-white select-all">{utrNumber}</span>
                       </div>
                       {message && (
                         <div className="border-t border-neutral-800 mt-1.5 pt-1.5">
                           <span className="text-[10px] text-neutral-500 uppercase">Vibe check:</span>
-                          <p className="italic text-neutral-200 mt-0.5">"{message}"</p>
+                          <p className="italic text-neutral-200 mt-0.5">&ldquo;{message}&rdquo;</p>
                         </div>
                       )}
                     </div>

@@ -47,8 +47,9 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ id: session.id, url: session.url })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Stripe API Error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    const message = error instanceof Error ? error.message : 'Internal Server Error'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

@@ -25,7 +25,7 @@ const generateMeshes = (): Mesh[] => {
 
   // 1. 3D Gyroscope (React)
   const gyroVertices: [number, number, number][] = []
-  const gyroEdges: [number, number, number][] = []
+  const gyroEdges: [number, number][] = []
   const rings = 3
   const pointsPerRing = 8
   const radius = 6
@@ -52,7 +52,7 @@ const generateMeshes = (): Mesh[] => {
   }
   // Center nucleus
   gyroVertices.push([0, 0, 0])
-  list.push({ vertices: gyroVertices, edges: gyroEdges as any })
+  list.push({ vertices: gyroVertices, edges: gyroEdges })
 
   // 2. 3D Tetrahedron (Node / Graph)
   list.push({
@@ -84,7 +84,7 @@ const generateMeshes = (): Mesh[] => {
 
   // 4. 3D Cylinder (Coffee Mug)
   const cylVertices: [number, number, number][] = []
-  const cylEdges: [number, number, number][] = []
+  const cylEdges: [number, number][] = []
   const cylPoints = 8
   const cylRadius = 4.5
   const cylHeight = 4
@@ -113,11 +113,11 @@ const generateMeshes = (): Mesh[] => {
   cylEdges.push([handleStart + 1, handleStart + 2])
   cylEdges.push([handleStart + 2, handleStart + 3])
 
-  list.push({ vertices: cylVertices, edges: cylEdges as any })
+  list.push({ vertices: cylVertices, edges: cylEdges })
 
   // 5. 3D Double Helix (Python / DNA)
   const helixVertices: [number, number, number][] = []
-  const helixEdges: [number, number, number][] = []
+  const helixEdges: [number, number][] = []
   const steps = 8
   const helixRadius = 4.5
 
@@ -136,7 +136,7 @@ const generateMeshes = (): Mesh[] => {
     // Rungs connecting strands
     helixEdges.push([2 * i, 2 * i + 1])
   }
-  list.push({ vertices: helixVertices, edges: helixEdges as any })
+  list.push({ vertices: helixVertices, edges: helixEdges })
 
   // 6. 3D Triangular Prism
   list.push({
@@ -176,7 +176,7 @@ const generateMeshes = (): Mesh[] => {
 
   // 8. 3D Cone / Apex
   const coneVertices: [number, number, number][] = [[0, 5, 0]] // apex
-  const coneEdges: [number, number, number][] = []
+  const coneEdges: [number, number][] = []
   const coneBasePoints = 8
   const coneBaseRadius = 4.5
 
@@ -187,11 +187,11 @@ const generateMeshes = (): Mesh[] => {
     // Correct loop wrap connection
     coneEdges.push([i + 1, ((i + 1) % coneBasePoints) + 1])
   }
-  list.push({ vertices: coneVertices, edges: coneEdges as any })
+  list.push({ vertices: coneVertices, edges: coneEdges })
 
   // 9. 3D Torus Ring
   const torusVertices: [number, number, number][] = []
-  const torusEdges: [number, number, number][] = []
+  const torusEdges: [number, number][] = []
   const ringA = 6
   const ringB = 6
   const R = 4.5
@@ -220,7 +220,7 @@ const generateMeshes = (): Mesh[] => {
       torusEdges.push([current, nextV])
     }
   }
-  list.push({ vertices: torusVertices, edges: torusEdges as any })
+  list.push({ vertices: torusVertices, edges: torusEdges })
 
   return list
 }
