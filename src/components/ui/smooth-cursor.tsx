@@ -83,43 +83,50 @@ const DefaultCursorSVG: FC = () => {
 export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
   springConfig = {
-    damping: 45,
-    stiffness: 400,
-    mass: 1,
+    damping: 38,
+    stiffness: 450,
+    mass: 0.45,
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
-  const [, setIsMoving] = useState(false);
   const [isNativeZone, setIsNativeZone] = useState(false);
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
-  const lastUpdateTime = useRef(Date.now());
+  const lastUpdateTime = useRef(performance.now());
   const previousAngle = useRef(0);
   const accumulatedRotation = useRef(0);
+  const activeTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const cursorX = useSpring(0, springConfig);
   const cursorY = useSpring(0, springConfig);
   const rotation = useSpring(0, {
     ...springConfig,
-    damping: 60,
-    stiffness: 300,
+    damping: 55,
+    stiffness: 280,
   });
-  const scale = useSpring(1, {
+  const scale = useSpring(0, { // Start at 0 for clean mount animation
     ...springConfig,
     stiffness: 500,
-    damping: 35,
+    damping: 32,
   });
 
   useEffect(() => {
+    // Center it initially & scale up
+    cursorX.set(window.innerWidth / 2);
+    cursorY.set(window.innerHeight / 2);
+    scale.set(1);
+
     const updateVelocity = (currentPos: Position) => {
-      const currentTime = Date.now();
+      const currentTime = performance.now();
       const deltaTime = currentTime - lastUpdateTime.current;
 
       if (deltaTime > 0) {
-        velocity.current = {
-          x: (currentPos.x - lastMousePos.current.x) / deltaTime,
-          y: (currentPos.y - lastMousePos.current.y) / deltaTime,
-        };
+        const vx = (currentPos.x - lastMousePos.current.x) / deltaTime;
+        const vy = (currentPos.y - lastMousePos.current.y) / deltaTime;
+        
+        // Exponential moving average (Low pass filter) to smooth directions
+        velocity.current.x = velocity.current.x * 0.75 + vx * 0.25;
+        velocity.current.y = velocity.current.y * 0.75 + vy * 0.25;
       }
 
       lastUpdateTime.current = currentTime;
@@ -127,11 +134,11 @@ export function SmoothCursor({
     };
 
     const smoothMouseMove = (e: MouseEvent) => {
-      // Determine whether native cursor should be used
       const target = e.target as Node | null;
       const isBodyForcedNative = document.body.classList.contains("cursor-native");
       const isElementNative = !!(target && (target as Element).closest?.('[data-cursor-native="true"], [data-cursor-native]'));
       const useNative = isBodyForcedNative || isElementNative;
+      
       setIsNativeZone(useNative);
       document.body.style.cursor = useNative ? "auto" : "none";
 
@@ -145,38 +152,35 @@ export function SmoothCursor({
       cursorX.set(currentPos.x);
       cursorY.set(currentPos.y);
 
-      if (speed > 0.1) {
-        const currentAngle =
+      if (speed > 0.05) {
+        const targetAngle =
           Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI) +
           90;
 
-        let angleDiff = currentAngle - previousAngle.current;
+        let angleDiff = targetAngle - previousAngle.current;
         if (angleDiff > 180) angleDiff -= 360;
         if (angleDiff < -180) angleDiff += 360;
+        
         accumulatedRotation.current += angleDiff;
         rotation.set(accumulatedRotation.current);
-        previousAngle.current = currentAngle;
+        previousAngle.current = targetAngle;
 
-        scale.set(0.95);
-        setIsMoving(true);
+        scale.set(0.92);
 
-        const timeout = setTimeout(() => {
+        if (activeTimeout.current) {
+          clearTimeout(activeTimeout.current);
+        }
+
+        activeTimeout.current = setTimeout(() => {
           scale.set(1);
-          setIsMoving(false);
-        }, 150);
-
-        return () => clearTimeout(timeout);
+        }, 80);
+      } else {
+        scale.set(1);
       }
     };
 
-    let rafId: number;
-    const throttledMouseMove = (e: MouseEvent) => {
-      if (rafId) return;
-
-      rafId = requestAnimationFrame(() => {
-        smoothMouseMove(e);
-        rafId = 0;
-      });
+    const handleMouseMove = (e: MouseEvent) => {
+      smoothMouseMove(e);
     };
 
     if (!document.body.classList.contains("cursor-native")) {
@@ -184,22 +188,25 @@ export function SmoothCursor({
     } else {
       document.body.style.cursor = "auto";
     }
+
     const observer = new MutationObserver(() => {
-      // React to body class changes for cursor-native
       if (document.body.classList.contains("cursor-native")) {
         document.body.style.cursor = "auto";
       } else {
         document.body.style.cursor = "none";
       }
     });
+
     observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-    window.addEventListener("mousemove", throttledMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener("mousemove", throttledMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
       observer.disconnect();
       document.body.style.cursor = "auto";
-      if (rafId) cancelAnimationFrame(rafId);
+      if (activeTimeout.current) {
+        clearTimeout(activeTimeout.current);
+      }
     };
   }, [cursorX, cursorY, rotation, scale]);
 
@@ -207,23 +214,18 @@ export function SmoothCursor({
     <motion.div
       style={{
         position: "fixed",
-        left: cursorX,
-        top: cursorY,
-        translateX: "-50%",
-        translateY: "-50%",
+        left: 0,
+        top: 0,
+        x: cursorX,
+        y: cursorY,
         rotate: rotation,
         scale: scale,
-        zIndex: 100,
+        zIndex: 999999, // Render on top of everything (overlays, loader)
         pointerEvents: "none",
         willChange: "transform",
         display: isNativeZone ? "none" : "block",
-      }}
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 30,
+        marginLeft: "-25px", // Center the 50px SVG horizontally
+        marginTop: "-27px",  // Center the 54px SVG vertically
       }}
     >
       {cursor}

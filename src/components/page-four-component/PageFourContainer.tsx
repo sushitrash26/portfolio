@@ -4,7 +4,6 @@ import PageFourHeading from "./PageFourHeading";
 import PageFourText from "./PageFourText";
 import Skills from "./Skills";
 import MyImage from "./MyImage";
-import { SmoothCursor } from "../ui/smooth-cursor";
 import { motion } from 'motion/react'
 import { BuyMeCoffeeModal } from "./BuyMeCoffeeModal";
 
@@ -14,7 +13,6 @@ const PageFourContainer = () => {
 
   return (
     <div className="w-full sm:w-[90vw] md:w-[80vw] lg:w-[75vw] max-w-7xl bg-white/95 mx-auto rounded-xl sm:rounded-2xl overflow-hidden p-4 sm:p-6 cursor-none">
-      <SmoothCursor />
       <PageFourHeading />
       <div className="w-full flex flex-col lg:flex-row items-center gap-6 lg:gap-0">
         <div className="w-full lg:w-[60%] flex flex-col justify-start mb-2">

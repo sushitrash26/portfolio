@@ -323,28 +323,25 @@ export const VectorFieldBackground = () => {
     window.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseleave', handleMouseLeave)
 
-    // Apply 3D rotation and perspective projection
-    const project = (
+    // Apply 3D rotation and perspective projection using precomputed trig values
+    const projectRotated = (
       x: number,
       y: number,
       z: number,
-      rx: number,
-      ry: number,
-      rz: number,
+      cosX: number, sinX: number,
+      cosY: number, sinY: number,
+      cosZ: number, sinZ: number,
       scale: number
     ) => {
       // 1. Rotate X axis (pitch)
-      const cosX = Math.cos(rx), sinX = Math.sin(rx)
       const y1 = y * cosX - z * sinX
       const z1 = y * sinX + z * cosX
 
       // 2. Rotate Y axis (yaw)
-      const cosY = Math.cos(ry), sinY = Math.sin(ry)
       const x2 = x * cosY + z1 * sinY
       const z2 = -x * sinY + z1 * cosY
 
       // 3. Rotate Z axis (roll)
-      const cosZ = Math.cos(rz), sinZ = Math.sin(rz)
       const x3 = x2 * cosZ - y1 * sinZ
       const y3 = x2 * sinZ + y1 * cosZ
 
@@ -361,6 +358,12 @@ export const VectorFieldBackground = () => {
     }
 
     const render = () => {
+      // Pause updates completely if tab is hidden to save resources
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(render)
+        return
+      }
+
       ctx.clearRect(0, 0, width, height)
 
       const influenceRadius = 135
@@ -405,10 +408,15 @@ export const VectorFieldBackground = () => {
         p.scale += (targetScale - p.scale) * 0.15
         p.opacity += (targetOpacity - p.opacity) * 0.12
 
-        // 5. Render 3D Mesh
+        // 5. Precompute sines/cosines once per point instead of per vertex
+        const cosX = Math.cos(p.rx), sinX = Math.sin(p.rx)
+        const cosY = Math.cos(p.ry), sinY = Math.sin(p.ry)
+        const cosZ = Math.cos(p.rz), sinZ = Math.sin(p.rz)
+
+        // 6. Render 3D Mesh
         const mesh = meshes[p.meshIndex]
         const projectedPoints = mesh.vertices.map((v) =>
-          project(v[0], v[1], v[2], p.rx, p.ry, p.rz, p.scale)
+          projectRotated(v[0], v[1], v[2], cosX, sinX, cosY, sinY, cosZ, sinZ, p.scale)
         )
 
         // Draw edges
