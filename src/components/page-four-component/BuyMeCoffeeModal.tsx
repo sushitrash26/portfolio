@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { createPortal } from 'react-dom'
 
 interface BuyMeCoffeeModalProps {
   isOpen: boolean
@@ -18,6 +19,12 @@ interface ConfettiParticle {
 }
 
 export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onClose }) => {
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const [step, setStep] = useState<'input' | 'payment-upi' | 'verify-utr' | 'processing' | 'success'>('input')
   const [donorName, setDonorName] = useState('')
   const [message, setMessage] = useState('')
@@ -58,7 +65,11 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
     if (!isOpen) return
     const handleKeyDown = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     const handleOutsideClick = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) onClose()
+      const target = e.target as Node;
+      if (modalRef.current && !modalRef.current.contains(target)) {
+        const isTrigger = (e.target as Element).closest?.('button')?.textContent?.toLowerCase().includes('coffee');
+        if (!isTrigger) onClose();
+      }
     }
     document.addEventListener('keydown', handleKeyDown)
     document.addEventListener('mousedown', handleOutsideClick)
@@ -205,10 +216,15 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
     })
   }
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div 
+          data-cursor-native="true"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 cursor-auto"
+        >
           <motion.div
             ref={modalRef}
             initial={{ scale: 0.93, opacity: 0, y: 20 }}
@@ -604,6 +620,7 @@ export const BuyMeCoffeeModal: React.FC<BuyMeCoffeeModalProps> = ({ isOpen, onCl
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }
